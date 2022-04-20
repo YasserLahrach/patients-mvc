@@ -39,15 +39,18 @@ public class PatientController {
         patientRepository.deleteById(id);
         return "redirect:/index?page="+page+"&keyword="+keyword;
     }
+
     @GetMapping("/")
     public String home(){
-        return "redirect:/index";
+        return "home";
     }
+
     @GetMapping("/patients")
     @ResponseBody
     public List<Patient> listPatientes(){
         return patientRepository.findAll();
     }
+
     @GetMapping("/formPatients")
     public String formPatient(Model model){
         model.addAttribute("patient",new Patient());
