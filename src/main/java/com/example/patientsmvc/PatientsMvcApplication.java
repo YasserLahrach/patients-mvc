@@ -1,6 +1,8 @@
 package com.example.patientsmvc;
 
+import com.example.patientsmvc.entites.Medecin;
 import com.example.patientsmvc.entites.Patient;
+import com.example.patientsmvc.repositories.MedecinRepository;
 import com.example.patientsmvc.repositories.PatientRepository;
 import com.example.patientsmvc.sec.service.SecurityService;
 import org.springframework.boot.CommandLineRunner;
@@ -25,6 +27,18 @@ public class PatientsMvcApplication {
     PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
     }
+    @Bean
+    CommandLineRunner commandLineRunner(MedecinRepository medecinRepository){
+        return args -> {
+            medecinRepository.save(new Medecin(null,"John",new Date(),"Neurochirurgien"));
+            medecinRepository.save(new Medecin(null,"Sirin",new Date(),"Radiologist"));
+            medecinRepository.save(new Medecin(null,"Boch3ayb",new Date(),"Pediatrician"));
+            medecinRepository.findAll().forEach(m -> {
+                System.out.println(m.getNom());
+            });
+
+        };
+    }
 
     //@Bean
     CommandLineRunner commandLineRunner(PatientRepository patientRepository){
@@ -39,6 +53,8 @@ public class PatientsMvcApplication {
 
         };
     }
+
+
 
     //@Bean
     CommandLineRunner saveUsers(SecurityService securityService){
